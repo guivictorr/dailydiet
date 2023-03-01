@@ -1,6 +1,28 @@
 import { extendTheme } from 'native-base'
 
 export const theme = extendTheme({
+  components: {
+    Text: {
+      defaultProps: {
+        lineHeight: 30,
+        color: 'gray.200',
+      },
+    },
+    Heading: {
+      defaultProps: {
+        lineHeight: 30,
+        color: 'gray.100',
+      },
+    },
+  },
+  fontSizes: {
+    sm: 12,
+    md: 14,
+    lg: 16,
+    xl: 18,
+    '2xl': 24,
+    '3xl': 32,
+  },
   colors: {
     redDark: '#BF3B44',
     redMid: '#F3BABD',
@@ -17,6 +39,21 @@ export const theme = extendTheme({
       500: '#dddedf',
       600: '#eff0f0',
       700: '#fafafa',
+    },
+  },
+  fonts: {
+    heading: 'Nunito',
+    body: 'Nunito',
+    mono: 'Nunito',
+  },
+  fontConfig: {
+    Nunito: {
+      400: {
+        normal: 'NunitoSans_400Regular',
+      },
+      700: {
+        normal: 'NunitoSans_700Bold',
+      },
     },
   },
 })
