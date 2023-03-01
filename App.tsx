@@ -1,9 +1,10 @@
-import { Text, View } from 'react-native'
+import React from 'react'
+import { NativeBaseProvider, Box } from 'native-base'
 
 export default function App() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Hello World</Text>
-    </View>
+    <NativeBaseProvider>
+      <Box>Hello world</Box>
+    </NativeBaseProvider>
   )
 }
