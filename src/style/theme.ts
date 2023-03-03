@@ -4,13 +4,11 @@ export const theme = extendTheme({
   components: {
     Text: {
       defaultProps: {
-        lineHeight: 30,
         color: 'gray.200',
       },
     },
     Heading: {
       defaultProps: {
-        lineHeight: 30,
         color: 'gray.100',
       },
     },

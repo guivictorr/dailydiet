@@ -31,7 +31,7 @@ export default function App() {
 
   return (
     <NativeBaseProvider theme={theme}>
-      <SafeAreaView>
+      <SafeAreaView onLayout={onLayoutRootView}>
         <Home />
       </SafeAreaView>
     </NativeBaseProvider>
