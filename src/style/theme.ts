@@ -12,6 +12,22 @@ export const theme = extendTheme({
         color: 'gray.100',
       },
     },
+    Button: {
+      defaultProps: {
+        rounded: 6,
+        bg: 'gray.200',
+        py: 4,
+        px: 6,
+        _text: {
+          fontWeight: 700,
+          fontSize: 'md',
+          color: 'white',
+        },
+        _pressed: {
+          bg: 'gray.100',
+        },
+      },
+    },
   },
   fontSizes: {
     sm: 12,

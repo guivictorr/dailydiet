@@ -8,7 +8,7 @@ export function StatisticResume() {
       justifyContent="center"
       alignItems="center"
       bg="greenLight"
-      rounded="md"
+      rounded={8}
       w="full"
       px="4"
       py="5"
