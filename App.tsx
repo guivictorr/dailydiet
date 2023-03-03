@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useCallback } from 'react'
-import { NativeBaseProvider, Text, Heading, Center } from 'native-base'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { NativeBaseProvider } from 'native-base'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
 import {
@@ -8,6 +9,7 @@ import {
   NunitoSans_700Bold,
 } from '@expo-google-fonts/nunito-sans'
 import { theme } from './src/style/theme'
+import { Home } from './src/sreens/home'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -29,10 +31,9 @@ export default function App() {
 
   return (
     <NativeBaseProvider theme={theme}>
-      <Center flex={1} onLayout={onLayoutRootView}>
-        <Text>Texto</Text>
-        <Heading>Titulo</Heading>
-      </Center>
+      <SafeAreaView>
+        <Home />
+      </SafeAreaView>
     </NativeBaseProvider>
   )
 }
