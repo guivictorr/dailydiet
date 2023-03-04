@@ -1,5 +1,26 @@
 import { extendTheme } from 'native-base'
 
+const colors = {
+  redDark: '#BF3B44',
+  redMid: '#F3BABD',
+  redLight: '#F4E6E7',
+  greenDark: '#639339',
+  greenMid: '#CBE4B4',
+  greenLight: '#E5F0DB',
+
+  gray: {
+    100: '#1B1D1E',
+    200: '#333638',
+    300: '#5c6265',
+    400: '#b9bbbc',
+    500: '#dddedf',
+    600: '#eff0f0',
+    700: '#fafafa',
+  },
+}
+
+export type CustomColors = typeof colors
+
 export const theme = extendTheme({
   components: {
     Text: {
@@ -37,24 +58,7 @@ export const theme = extendTheme({
     '2xl': 24,
     '3xl': 32,
   },
-  colors: {
-    redDark: '#BF3B44',
-    redMid: '#F3BABD',
-    redLight: '#F4E6E7',
-    greenDark: '#639339',
-    greenMid: '#CBE4B4',
-    greenLight: '#E5F0DB',
-
-    gray: {
-      100: '#1B1D1E',
-      200: '#333638',
-      300: '#5c6265',
-      400: '#b9bbbc',
-      500: '#dddedf',
-      600: '#eff0f0',
-      700: '#fafafa',
-    },
-  },
+  colors,
   fonts: {
     heading: 'Nunito',
     body: 'Nunito',

@@ -47,7 +47,7 @@ export function Home() {
         <UserPhoto />
       </HStack>
       <Box mt="8" mb="10">
-        <StatisticResume />
+        <StatisticResume status="OFF_DIET" />
       </Box>
 
       <Text mb="2" fontSize="lg">
