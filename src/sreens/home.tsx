@@ -61,6 +61,7 @@ export function Home() {
         sections={mealsList}
         keyExtractor={(item, index) => item.name + index}
         renderItem={({ item }) => <Meal {...item} />}
+        stickySectionHeadersEnabled={false}
         renderSectionHeader={({ section: { title } }) => (
           <Heading mt="8" mb="2" fontSize="xl">
             {title}
