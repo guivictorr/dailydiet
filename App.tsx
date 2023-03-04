@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import React, { useCallback } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { NativeBaseProvider } from 'native-base'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
@@ -9,7 +8,8 @@ import {
   NunitoSans_700Bold,
 } from '@expo-google-fonts/nunito-sans'
 import { theme } from './src/style/theme'
-import { Home } from './src/sreens/home'
+import { Routes } from './src/routes'
+import { NavigationContainer } from '@react-navigation/native'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -31,9 +31,9 @@ export default function App() {
 
   return (
     <NativeBaseProvider theme={theme}>
-      <SafeAreaView onLayout={onLayoutRootView}>
-        <Home />
-      </SafeAreaView>
+      <NavigationContainer onReady={onLayoutRootView}>
+        <Routes />
+      </NavigationContainer>
     </NativeBaseProvider>
   )
 }
