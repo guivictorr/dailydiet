@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import {
   Box,
   Button,
@@ -15,6 +16,7 @@ import DailyDietLogo from '../../assets/logo.png'
 import { Meal, MealProps } from '../components/meal'
 import { StatisticResume } from '../components/statistic-resume'
 import { UserPhoto } from '../components/user-photo'
+import { StackNavigationProp } from '../routes/app.routes'
 
 const mealsList: SectionListData<MealProps>[] = [
   {
@@ -40,6 +42,8 @@ const mealsList: SectionListData<MealProps>[] = [
 ]
 
 export function Home() {
+  const navigation = useNavigation<StackNavigationProp>()
+
   return (
     <VStack px="6" pt="5">
       <HStack alignItems="center" justifyContent="space-between">
@@ -53,7 +57,10 @@ export function Home() {
       <Text mb="2" fontSize="lg">
         Refeições
       </Text>
-      <Button startIcon={<Icon as={<Plus color="white" size={18} />} />}>
+      <Button
+        onPress={() => navigation.navigate('NewMeal')}
+        startIcon={<Icon as={<Plus color="white" size={18} />} />}
+      >
         Nova Refeição
       </Button>
 
