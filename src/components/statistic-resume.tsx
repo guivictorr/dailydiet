@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
+import { useNavigation } from '@react-navigation/native'
 import { Heading, Icon, Pressable, Text, useTheme } from 'native-base'
 import { ArrowUpRight } from 'phosphor-react-native'
+import { StackNavigationProp } from '../routes/app.routes'
 
 enum StatisticResumeStatus {
   ON_DIET = 'green',
@@ -12,9 +14,12 @@ type StatisticResumeProps = {
 }
 
 export function StatisticResume({ status }: StatisticResumeProps) {
+  const navigation = useNavigation<StackNavigationProp>()
+
   const { colors } = useTheme()
   return (
     <Pressable
+      onPress={() => navigation.navigate('GeneralStatistics')}
       justifyContent="center"
       alignItems="center"
       bg={`${StatisticResumeStatus[status]}Light`}
