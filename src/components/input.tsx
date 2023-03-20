@@ -1,14 +1,25 @@
-import { FormControl, IInputProps, Input as NativeBaseInput } from 'native-base'
+import {
+  FormControl,
+  IFormControlProps,
+  IInputProps,
+  Input as NativeBaseInput,
+} from 'native-base'
 
 type InputProps = {
   label: string
   errorMessage?: string
   input?: IInputProps
+  formControl?: IFormControlProps
 }
 
-export function Input({ label = 'Label', errorMessage, input }: InputProps) {
+export function Input({
+  label = 'Label',
+  errorMessage,
+  input,
+  formControl,
+}: InputProps) {
   return (
-    <FormControl isInvalid={!!errorMessage}>
+    <FormControl isInvalid={!!errorMessage} {...formControl}>
       <FormControl.Label
         _text={{ color: 'gray.200', fontWeight: 'bold', fontSize: 'md' }}
       >
@@ -21,7 +32,7 @@ export function Input({ label = 'Label', errorMessage, input }: InputProps) {
         fontSize="md"
         borderColor="gray.500"
         _focus={{
-          bg: 'white',
+          bg: 'transparent',
           borderColor: 'gray.400',
         }}
         {...input}

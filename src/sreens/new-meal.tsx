@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import {
   Center,
   Heading,
+  HStack,
   Icon,
   IconButton,
   useTheme,
@@ -47,6 +48,20 @@ export function NewMeal() {
             h: 120,
           }}
         />
+        <HStack space="5" justifyContent="space-between">
+          <Input
+            label="Data"
+            formControl={{
+              flex: 1,
+            }}
+          />
+          <Input
+            label="Hora"
+            formControl={{
+              flex: 1,
+            }}
+          />
+        </HStack>
       </VStack>
     </VStack>
   )
