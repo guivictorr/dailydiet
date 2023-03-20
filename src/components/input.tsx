@@ -1,16 +1,18 @@
 import { FormControl, IInputProps, Input as NativeBaseInput } from 'native-base'
 
 type InputProps = {
+  label: string
+  errorMessage?: string
   input?: IInputProps
 }
 
-export function Input({ input }: InputProps) {
+export function Input({ label = 'Label', errorMessage, input }: InputProps) {
   return (
-    <FormControl>
+    <FormControl isInvalid={!!errorMessage}>
       <FormControl.Label
         _text={{ color: 'gray.200', fontWeight: 'bold', fontSize: 'md' }}
       >
-        Label
+        {label}
       </FormControl.Label>
       <NativeBaseInput
         rounded="6"
@@ -24,7 +26,7 @@ export function Input({ input }: InputProps) {
         }}
         {...input}
       />
-      <FormControl.ErrorMessage>Error</FormControl.ErrorMessage>
+      <FormControl.ErrorMessage>{errorMessage}</FormControl.ErrorMessage>
     </FormControl>
   )
 }
