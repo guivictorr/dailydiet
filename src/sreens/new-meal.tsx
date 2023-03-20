@@ -8,6 +8,7 @@ import {
   VStack,
 } from 'native-base'
 import { ArrowLeft } from 'phosphor-react-native'
+import { Input } from '../components/input'
 import { StackNavigationProp } from '../routes/app.routes'
 
 export function NewMeal() {
@@ -29,7 +30,9 @@ export function NewMeal() {
         />
         <Heading fontSize="lg">Nova refeição</Heading>
       </Center>
-      <VStack px="8" bg="gray.700" roundedTop="20" mt={-2} h="full"></VStack>
+      <VStack pt="10" px="8" bg="gray.700" roundedTop="20" mt={-2} h="full">
+        <Input />
+      </VStack>
     </VStack>
   )
 }
