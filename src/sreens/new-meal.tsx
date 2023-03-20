@@ -30,8 +30,23 @@ export function NewMeal() {
         />
         <Heading fontSize="lg">Nova refeição</Heading>
       </Center>
-      <VStack pt="10" px="8" bg="gray.700" roundedTop="20" mt={-2} h="full">
-        <Input label="Nome" errorMessage="Error message" />
+      <VStack
+        space="8"
+        pt="10"
+        px="8"
+        bg="gray.700"
+        roundedTop="20"
+        mt={-2}
+        h="full"
+      >
+        <Input label="Nome" />
+        <Input
+          label="Descrição"
+          input={{
+            multiline: true,
+            h: 120,
+          }}
+        />
       </VStack>
     </VStack>
   )
