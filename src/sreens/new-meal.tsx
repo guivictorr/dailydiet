@@ -1,9 +1,35 @@
-import { Center, Text } from 'native-base'
+import { useNavigation } from '@react-navigation/native'
+import {
+  Center,
+  Heading,
+  Icon,
+  IconButton,
+  useTheme,
+  VStack,
+} from 'native-base'
+import { ArrowLeft } from 'phosphor-react-native'
+import { StackNavigationProp } from '../routes/app.routes'
 
 export function NewMeal() {
+  const { colors } = useTheme()
+  const navigation = useNavigation<StackNavigationProp>()
   return (
-    <Center flex={1}>
-      <Text>New Meal</Text>
-    </Center>
+    <VStack>
+      <Center px="8" h={20} bg="gray.500" position="relative">
+        <IconButton
+          onPress={navigation.goBack}
+          position="absolute"
+          top="4"
+          left="24px"
+          icon={<Icon as={() => <ArrowLeft color={colors.gray['100']} />} />}
+          _pressed={{
+            backgroundColor: 'gray.400:alpha.40',
+            rounded: 'full',
+          }}
+        />
+        <Heading fontSize="lg">Nova refeição</Heading>
+      </Center>
+      <VStack px="8" bg="gray.700" roundedTop="20" mt={-2} h="full"></VStack>
+    </VStack>
   )
 }
