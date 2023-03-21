@@ -13,16 +13,23 @@ import {
   VStack,
 } from 'native-base'
 import { ArrowLeft } from 'phosphor-react-native'
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 import { Input } from '../components/input'
 import { StackNavigationProp } from '../routes/app.routes'
 
 type RadioButtonProps = {
   children: ReactNode
   color: 'red' | 'green'
+  isSelected?: boolean
+  onPress?: () => void
 }
 
-function RadioButton({ children, color }: RadioButtonProps) {
+function RadioButton({
+  children,
+  color,
+  isSelected,
+  onPress,
+}: RadioButtonProps) {
   return (
     <Button
       flex={1}
@@ -31,6 +38,8 @@ function RadioButton({ children, color }: RadioButtonProps) {
       rounded="6"
       borderWidth={1}
       borderColor="gray.600"
+      isPressed={isSelected}
+      onPress={onPress}
       _pressed={{
         bg: `${color}Light`,
         borderWidth: 1,
@@ -48,6 +57,7 @@ function RadioButton({ children, color }: RadioButtonProps) {
 }
 
 export function NewMeal() {
+  const [isOnDiet, setIsOnDiet] = useState(true)
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp>()
   return (
@@ -95,8 +105,20 @@ export function NewMeal() {
               Está dentro da dieta ?
             </Text>
             <HStack space="4" justifyContent="space-between">
-              <RadioButton color="green">Sim </RadioButton>
-              <RadioButton color="red">Não</RadioButton>
+              <RadioButton
+                isSelected={isOnDiet}
+                onPress={() => setIsOnDiet(true)}
+                color="green"
+              >
+                Sim
+              </RadioButton>
+              <RadioButton
+                isSelected={!isOnDiet}
+                onPress={() => setIsOnDiet(false)}
+                color="red"
+              >
+                Não
+              </RadioButton>
             </HStack>
           </VStack>
 
