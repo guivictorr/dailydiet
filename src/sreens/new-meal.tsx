@@ -60,6 +60,7 @@ export function NewMeal() {
   const [isOnDiet, setIsOnDiet] = useState(true)
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp>()
+
   return (
     <VStack>
       <Center px="8" h={20} bg="gray.500" position="relative">
@@ -122,7 +123,9 @@ export function NewMeal() {
             </HStack>
           </VStack>
 
-          <Button>Cadastrar refeição</Button>
+          <Button mt="8" onPress={() => navigation.navigate('Feedback')}>
+            Cadastrar refeição
+          </Button>
         </VStack>
       </ScrollView>
     </VStack>
