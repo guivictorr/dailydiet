@@ -123,7 +123,10 @@ export function NewMeal() {
             </HStack>
           </VStack>
 
-          <Button mt="8" onPress={() => navigation.navigate('Feedback')}>
+          <Button
+            mt="8"
+            onPress={() => navigation.navigate('Feedback', { isOnDiet })}
+          >
             Cadastrar refeição
           </Button>
         </VStack>
