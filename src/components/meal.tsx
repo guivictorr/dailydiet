@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
+import { useNavigation } from '@react-navigation/native'
 import { Box, Text, Divider, HStack, Pressable, Heading } from 'native-base'
+import { StackNavigationProp } from '../routes/app.routes'
 
 enum MealStatus {
   ON_DIET = 'greenMid',
@@ -13,8 +15,10 @@ export type MealProps = {
 }
 
 export function Meal({ name, createdAt, status }: MealProps) {
+  const navigation = useNavigation<StackNavigationProp>()
   return (
     <Pressable
+      onPress={() => navigation.navigate('MealDetails')}
       borderWidth={1}
       rounded={6}
       borderColor="gray.500"

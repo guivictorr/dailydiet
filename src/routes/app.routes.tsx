@@ -5,6 +5,7 @@ import {
 import { Feedback } from '../sreens/feedback'
 import { GeneralStatistics } from '../sreens/general-statistics'
 import { Home } from '../sreens/home'
+import { MealDetails } from '../sreens/meal-details'
 import { NewMeal } from '../sreens/new-meal'
 
 export type AppRoutesList = {
@@ -12,6 +13,7 @@ export type AppRoutesList = {
   NewMeal: undefined
   GeneralStatistics: undefined
   Feedback: { isOnDiet: boolean }
+  MealDetails: undefined
 }
 
 export type StackNavigationProp = NativeStackNavigationProp<AppRoutesList>
@@ -25,6 +27,7 @@ export function AppRoutes() {
       <Screen name="NewMeal" component={NewMeal} />
       <Screen name="GeneralStatistics" component={GeneralStatistics} />
       <Screen name="Feedback" component={Feedback} />
+      <Screen name="MealDetails" component={MealDetails} />
     </Navigator>
   )
 }
