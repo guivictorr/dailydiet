@@ -36,16 +36,34 @@ export const theme = extendTheme({
     Button: {
       defaultProps: {
         rounded: 6,
-        bg: 'gray.200',
         py: 4,
         px: 6,
         _text: {
           fontWeight: 700,
           fontSize: 'md',
-          color: 'white',
         },
-        _pressed: {
-          bg: 'gray.100',
+      },
+      variants: {
+        solid: {
+          bg: 'gray.200',
+          _text: {
+            color: 'white',
+          },
+          _pressed: {
+            bg: 'gray.100',
+          },
+        },
+        outline: {
+          bg: 'transparent',
+          border: 1,
+          borderColor: 'gray.200',
+          _text: {
+            color: 'gray.200',
+          },
+          _pressed: {
+            opacity: 0.5,
+            bg: 'white',
+          },
         },
       },
     },
