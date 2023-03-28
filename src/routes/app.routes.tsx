@@ -13,7 +13,7 @@ export type AppRoutesList = {
   NewMeal: undefined
   GeneralStatistics: undefined
   Feedback: { isOnDiet: boolean }
-  MealDetails: undefined
+  MealDetails: { isOnDiet: boolean }
 }
 
 export type StackNavigationProp = NativeStackNavigationProp<AppRoutesList>

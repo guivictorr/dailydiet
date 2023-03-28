@@ -18,7 +18,9 @@ export function Meal({ name, createdAt, status }: MealProps) {
   const navigation = useNavigation<StackNavigationProp>()
   return (
     <Pressable
-      onPress={() => navigation.navigate('MealDetails')}
+      onPress={() =>
+        navigation.navigate('MealDetails', { isOnDiet: status === 'ON_DIET' })
+      }
       borderWidth={1}
       rounded={6}
       borderColor="gray.500"
