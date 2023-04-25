@@ -10,6 +10,7 @@ import {
 import { theme } from './src/style/theme'
 import { Routes } from './src/routes'
 import { NavigationContainer } from '@react-navigation/native'
+import { StatusBar } from 'expo-status-bar'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -32,6 +33,7 @@ export default function App() {
   return (
     <NativeBaseProvider theme={theme}>
       <NavigationContainer onReady={onLayoutRootView}>
+        <StatusBar style="dark" />
         <Routes />
       </NavigationContainer>
     </NativeBaseProvider>

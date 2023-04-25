@@ -58,7 +58,7 @@ export function Home() {
         Refeições
       </Text>
       <Button
-        onPress={() => navigation.navigate('NewMeal')}
+        onPress={() => navigation.navigate('NewMeal', { mode: 'CREATE' })}
         startIcon={<Icon as={<Plus color="white" size={18} />} />}
       >
         Nova Refeição

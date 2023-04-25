@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import {
   Box,
   Button,
@@ -15,7 +15,7 @@ import {
 import { ArrowLeft } from 'phosphor-react-native'
 import { ReactNode, useState } from 'react'
 import { Input } from '../components/input'
-import { StackNavigationProp } from '../routes/app.routes'
+import { StackNavigationProp, AppRoutesList } from '../routes/app.routes'
 
 type RadioButtonProps = {
   children: ReactNode
@@ -56,10 +56,23 @@ function RadioButton({
   )
 }
 
+const modes = {
+  EDIT: {
+    title: 'Editar refeição',
+    submitText: 'Salvar refeição',
+  },
+  CREATE: {
+    title: 'Nova refeição',
+    submitText: 'Cadastrar refeição',
+  },
+}
+
 export function NewMeal() {
   const [isOnDiet, setIsOnDiet] = useState(true)
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp>()
+  const { params } = useRoute()
+  const { mode } = params as AppRoutesList['NewMeal']
 
   return (
     <VStack>
@@ -75,7 +88,7 @@ export function NewMeal() {
             rounded: 'full',
           }}
         />
-        <Heading fontSize="lg">Nova refeição</Heading>
+        <Heading fontSize="lg">{modes[mode].title}</Heading>
       </Center>
       <ScrollView pt="10" px="8" bg="gray.700" roundedTop="20" mt={-2} h="full">
         <VStack space="6">
@@ -127,7 +140,7 @@ export function NewMeal() {
             mt="8"
             onPress={() => navigation.navigate('Feedback', { isOnDiet })}
           >
-            Cadastrar refeição
+            {modes[mode].submitText}
           </Button>
         </VStack>
       </ScrollView>

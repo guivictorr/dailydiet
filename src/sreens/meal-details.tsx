@@ -80,7 +80,11 @@ export function MealDetails() {
             </Badge>
           </VStack>
           <VStack space="2">
-            <Button>Editar refeição</Button>
+            <Button
+              onPress={() => navigation.navigate('NewMeal', { mode: 'EDIT' })}
+            >
+              Editar refeição
+            </Button>
             <Button variant="outline">Excluir refeição</Button>
           </VStack>
         </VStack>
