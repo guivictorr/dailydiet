@@ -6,6 +6,7 @@ import {
   Center,
   Heading,
   HStack,
+  Modal,
   Icon,
   IconButton,
   ScrollView,
@@ -14,9 +15,11 @@ import {
   VStack,
 } from 'native-base'
 import { ArrowLeft } from 'phosphor-react-native'
+import { useState } from 'react'
 import { StackNavigationProp } from '../routes/app.routes'
 
 export function MealDetails() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { params } = useRoute()
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp>()
@@ -85,10 +88,34 @@ export function MealDetails() {
             >
               Editar refeição
             </Button>
-            <Button variant="outline">Excluir refeição</Button>
+            <Button variant="outline" onPress={() => setIsModalOpen(true)}>
+              Excluir refeição
+            </Button>
           </VStack>
         </VStack>
       </ScrollView>
+      <Modal isOpen={isModalOpen} size="xl">
+        <Modal.Content maxH="96" p="4">
+          <Modal.Body>
+            <Text fontWeight="bold" fontSize="xl" textAlign="center">
+              Deseja realmente excluir o registro da refeição?
+            </Text>
+            <HStack mt="8" space="3">
+              <Button
+                onPress={() => setIsModalOpen(false)}
+                _text={{ fontSize: 'sm' }}
+                flex={1}
+                variant="outline"
+              >
+                Cancelar
+              </Button>
+              <Button _text={{ fontSize: 'sm' }} flex={1}>
+                Sim, Excluir
+              </Button>
+            </HStack>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
     </VStack>
   )
 }
