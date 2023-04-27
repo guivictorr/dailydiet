@@ -118,7 +118,7 @@ export function NewMeal() {
             }}
           />
           <HStack space="5" justifyContent="space-between">
-            <VStack flex={1}>
+            <VStack w="full">
               <Text fontWeight="bold" fontSize="md">
                 Data e hora
               </Text>
