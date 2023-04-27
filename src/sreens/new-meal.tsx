@@ -17,6 +17,7 @@ import { ArrowLeft } from 'phosphor-react-native'
 import { ReactNode, useState } from 'react'
 import { Input } from '../components/input'
 import { StackNavigationProp, AppRoutesList } from '../routes/app.routes'
+import { Controller, useForm } from 'react-hook-form'
 
 type RadioButtonProps = {
   children: ReactNode
@@ -70,13 +71,17 @@ const modes = {
 
 export function NewMeal() {
   const [isOnDiet, setIsOnDiet] = useState(true)
+  const { control, handleSubmit, getValues } = useForm()
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp>()
   const { params } = useRoute()
   const { mode } = params as AppRoutesList['NewMeal']
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
-  const [date, setDate] = useState<Date | null>(null)
+
+  const handleFormSubmit = (data: any) => {
+    console.warn(data, 'batata')
+  }
 
   const showDateTimePicker = () => {
     setDatePickerVisibility(true)
@@ -84,11 +89,6 @@ export function NewMeal() {
 
   const hideDatePicker = () => {
     setDatePickerVisibility(false)
-  }
-
-  const handleConfirm = (date: Date) => {
-    setDate(date)
-    hideDatePicker()
   }
 
   return (
@@ -109,8 +109,10 @@ export function NewMeal() {
       </Center>
       <ScrollView pt="10" px="8" bg="gray.700" roundedTop="20" mt={-2} h="full">
         <VStack space="6">
-          <Input label="Nome" />
+          <Input name="name" control={control} label="Nome" />
           <Input
+            name="description"
+            control={control}
             label="Descrição"
             input={{
               multiline: true,
@@ -135,18 +137,27 @@ export function NewMeal() {
                   bg: 'transparent',
                 }}
               >
-                {date &&
-                  date.toLocaleDateString('pt-br', {
+                {getValues().date &&
+                  getValues().date.toLocaleDateString('pt-br', {
                     hour: '2-digit',
                     minute: '2-digit',
                   })}
               </Button>
             </VStack>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="datetime"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
+            <Controller
+              control={control}
+              name="date"
+              render={({ field: { onChange } }) => (
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="datetime"
+                  onConfirm={(event) => {
+                    onChange(event)
+                    hideDatePicker()
+                  }}
+                  onCancel={hideDatePicker}
+                />
+              )}
             />
           </HStack>
           <VStack>
@@ -171,10 +182,7 @@ export function NewMeal() {
             </HStack>
           </VStack>
 
-          <Button
-            mt="8"
-            onPress={() => navigation.navigate('Feedback', { isOnDiet })}
-          >
+          <Button mt="8" onPress={handleSubmit(handleFormSubmit)}>
             {modes[mode].submitText}
           </Button>
         </VStack>
