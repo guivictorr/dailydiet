@@ -1,4 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import {
   Box,
   Button,
@@ -74,6 +75,22 @@ export function NewMeal() {
   const { params } = useRoute()
   const { mode } = params as AppRoutesList['NewMeal']
 
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
+  const [date, setDate] = useState<Date | null>(null)
+
+  const showDateTimePicker = () => {
+    setDatePickerVisibility(true)
+  }
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false)
+  }
+
+  const handleConfirm = (date: Date) => {
+    setDate(date)
+    hideDatePicker()
+  }
+
   return (
     <VStack>
       <Center px="8" h={20} bg="gray.500" position="relative">
@@ -101,17 +118,35 @@ export function NewMeal() {
             }}
           />
           <HStack space="5" justifyContent="space-between">
-            <Input
-              label="Data"
-              formControl={{
-                flex: 1,
-              }}
-            />
-            <Input
-              label="Hora"
-              formControl={{
-                flex: 1,
-              }}
+            <VStack flex={1}>
+              <Text fontWeight="bold" fontSize="md">
+                Data e hora
+              </Text>
+              <Button
+                bg="transparent"
+                h="16"
+                borderWidth={1}
+                borderColor="gray.500"
+                onPress={showDateTimePicker}
+                _text={{
+                  color: 'black',
+                }}
+                _pressed={{
+                  bg: 'transparent',
+                }}
+              >
+                {date &&
+                  date.toLocaleDateString('pt-br', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+              </Button>
+            </VStack>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="datetime"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
             />
           </HStack>
           <VStack>
