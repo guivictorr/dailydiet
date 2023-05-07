@@ -14,47 +14,58 @@ import {
   VStack,
 } from 'native-base'
 import { ArrowLeft } from 'phosphor-react-native'
-import { ReactNode, useState } from 'react'
+import { useState } from 'react'
 import { Input } from '../components/input'
 import { StackNavigationProp, AppRoutesList } from '../routes/app.routes'
 import { Controller, useForm } from 'react-hook-form'
 
 type RadioButtonProps = {
-  children: ReactNode
-  color: 'red' | 'green'
-  isSelected?: boolean
-  onPress?: () => void
+  options: {
+    label: string
+    value: string
+    color: 'red' | 'green'
+  }[]
+  onChangeValue?: (radioValue: string) => void
 }
 
-function RadioButton({
-  children,
-  color,
-  isSelected,
-  onPress,
-}: RadioButtonProps) {
+function RadioButtons({ options, onChangeValue }: RadioButtonProps) {
+  const [selectedId, setSelectedId] = useState(options[0].value)
+
+  function onPressRadioButton(radioValue: string) {
+    setSelectedId(radioValue)
+    if (onChangeValue) {
+      onChangeValue(radioValue)
+    }
+  }
+
   return (
-    <Button
-      flex={1}
-      flexDir="row"
-      bg="gray.600"
-      rounded="6"
-      borderWidth={1}
-      borderColor="gray.600"
-      isPressed={isSelected}
-      onPress={onPress}
-      _pressed={{
-        bg: `${color}Light`,
-        borderWidth: 1,
-        borderColor: `${color}Dark`,
-      }}
-    >
-      <HStack alignItems="center">
-        <Box boxSize="2" mr="2" bg={`${color}Dark`} rounded="full" />
-        <Text fontSize="md" fontWeight="bold" color="gray.100">
-          {children}
-        </Text>
-      </HStack>
-    </Button>
+    <HStack space="4" justifyContent="space-between">
+      {options.map((option) => (
+        <Button
+          key={option.value}
+          flex={1}
+          flexDir="row"
+          bg="gray.600"
+          rounded="6"
+          borderWidth={1}
+          borderColor="gray.600"
+          isPressed={selectedId === option.value}
+          _pressed={{
+            bg: `${option.color}Light`,
+            borderWidth: 1,
+            borderColor: `${option.color}Dark`,
+          }}
+          onPress={() => onPressRadioButton(option.value)}
+        >
+          <HStack alignItems="center">
+            <Box boxSize="2" mr="2" bg={`${option.color}Dark`} rounded="full" />
+            <Text fontSize="md" fontWeight="bold" color="gray.100">
+              {option.label}
+            </Text>
+          </HStack>
+        </Button>
+      ))}
+    </HStack>
   )
 }
 
@@ -70,7 +81,6 @@ const modes = {
 }
 
 export function NewMeal() {
-  const [isOnDiet, setIsOnDiet] = useState(true)
   const { control, handleSubmit, getValues } = useForm()
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp>()
@@ -80,7 +90,7 @@ export function NewMeal() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
 
   const handleFormSubmit = (data: any) => {
-    console.warn(data, 'batata')
+    console.warn(data)
   }
 
   const showDateTimePicker = () => {
@@ -164,22 +174,19 @@ export function NewMeal() {
             <Text mb="2" fontWeight="bold" fontSize="md">
               Está dentro da dieta ?
             </Text>
-            <HStack space="4" justifyContent="space-between">
-              <RadioButton
-                isSelected={isOnDiet}
-                onPress={() => setIsOnDiet(true)}
-                color="green"
-              >
-                Sim
-              </RadioButton>
-              <RadioButton
-                isSelected={!isOnDiet}
-                onPress={() => setIsOnDiet(false)}
-                color="red"
-              >
-                Não
-              </RadioButton>
-            </HStack>
+            <Controller
+              control={control}
+              name="isOnDiet"
+              render={({ field: { onChange } }) => (
+                <RadioButtons
+                  onChangeValue={onChange}
+                  options={[
+                    { label: 'Sim', value: 'yes', color: 'green' },
+                    { label: 'Não', value: 'no', color: 'red' },
+                  ]}
+                />
+              )}
+            />
           </VStack>
 
           <Button mt="8" onPress={handleSubmit(handleFormSubmit)}>
