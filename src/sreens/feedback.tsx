@@ -8,23 +8,33 @@ import { StackNavigationProp } from '../routes/app.routes'
 export function Feedback() {
   const route = useRoute()
   const navigation = useNavigation<StackNavigationProp>()
-  const { isOnDiet } = route.params as { isOnDiet: boolean }
+  const { isOnDiet } = route.params as { isOnDiet: 'yes' | 'no' }
 
   const values = {
-    title: isOnDiet ? 'Continue assim!' : 'Que pena!',
-    description: isOnDiet
-      ? 'Você continua dentro da dieta. Muito bem!'
-      : 'Você saiu da dieta dessa vez, mas continue se esforçando e não desista!',
-    color: isOnDiet ? 'green' : 'red',
+    yes: {
+      title: 'Continue assim!',
+      description: 'Você continua dentro da dieta. Muito bem!',
+      color: 'green',
+      image: positiveImage,
+    },
+    no: {
+      title: 'Que pena!',
+      description:
+        'Você saiu da dieta dessa vez, mas continue se esforçando e não desista!',
+      color: 'red',
+      image: negativeImage,
+    },
   }
 
   return (
     <Center flex={1}>
-      <Heading color={`${values.color}Dark`}>{values.title}</Heading>
+      <Heading color={`${values[isOnDiet].color}Dark`}>
+        {values[isOnDiet].title}
+      </Heading>
       <Text fontSize="md" textAlign="center" maxW="64" color="gray.100" mt="2">
-        {values.description}
+        {values[isOnDiet].description}
       </Text>
-      <Image source={isOnDiet ? positiveImage : negativeImage} mt="10" alt="" />
+      <Image source={values[isOnDiet].image} mt="10" alt="" />
       <Button mt="8" onPress={() => navigation.navigate('Home')}>
         Ir para a página inicial
       </Button>

@@ -28,6 +28,7 @@ export const DatetimePicker = ({ control }: DatetimePickerProps) => {
       <FormControl isInvalid={fieldState.invalid} w="full">
         <FormControl.Label
           _text={{
+            color: 'gray.200',
             fontWeight: 'bold',
             fontSize: 'md',
           }}
@@ -38,7 +39,7 @@ export const DatetimePicker = ({ control }: DatetimePickerProps) => {
           bg="transparent"
           h="16"
           borderWidth={1}
-          borderColor="gray.500"
+          borderColor={fieldState.invalid ? 'red.500' : 'gray.500'}
           onPress={showDateTimePicker}
           _text={{
             color: 'black',

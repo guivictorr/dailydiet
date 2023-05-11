@@ -12,7 +12,7 @@ export type AppRoutesList = {
   Home: undefined
   NewMeal: { mode: 'EDIT' | 'CREATE' }
   GeneralStatistics: undefined
-  Feedback: { isOnDiet: boolean }
+  Feedback: { isOnDiet: 'yes' | 'no' }
   MealDetails: { isOnDiet: boolean }
 }
 

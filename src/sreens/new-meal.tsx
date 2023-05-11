@@ -28,11 +28,12 @@ type RadioButtonProps = {
     value: string
     color: 'red' | 'green'
   }[]
+  value: string
   onChangeValue?: (radioValue: string) => void
 }
 
-function RadioButtons({ options, onChangeValue }: RadioButtonProps) {
-  const [selectedId, setSelectedId] = useState(options[0].value)
+function RadioButtons({ options, onChangeValue, value }: RadioButtonProps) {
+  const [selectedId, setSelectedId] = useState(value)
 
   function onPressRadioButton(radioValue: string) {
     setSelectedId(radioValue)
@@ -102,10 +103,15 @@ const newMealSchema = z.object({
   }),
 })
 
+type NewMealSchemaForm = z.infer<typeof newMealSchema>
+
 export function NewMeal() {
   const insets = useSafeAreaInsets()
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, getValues } = useForm<NewMealSchemaForm>({
     resolver: zodResolver(newMealSchema),
+    defaultValues: {
+      isOnDiet: 'yes',
+    },
   })
 
   const { colors } = useTheme()
@@ -114,6 +120,7 @@ export function NewMeal() {
   const { mode } = params as AppRoutesList['NewMeal']
 
   const handleFormSubmit = (data: any) => {
+    navigation.navigate('Feedback', { isOnDiet: getValues().isOnDiet })
     console.warn(data)
   }
 
@@ -136,7 +143,15 @@ export function NewMeal() {
         </Center>
       </Box>
 
-      <ScrollView pt="10" px="8" bg="gray.700" roundedTop="20" mt={-2}>
+      <ScrollView
+        _contentContainerStyle={{
+          py: 10,
+        }}
+        px="8"
+        bg="gray.700"
+        roundedTop="20"
+        mt={-2}
+      >
         <VStack space="6">
           <Input name="name" control={control} label="Nome" />
           <Input
@@ -156,9 +171,10 @@ export function NewMeal() {
             <Controller
               control={control}
               name="isOnDiet"
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange, value } }) => (
                 <RadioButtons
                   onChangeValue={onChange}
+                  value={value}
                   options={[
                     { label: 'Sim', value: 'yes', color: 'green' },
                     { label: 'Não', value: 'no', color: 'red' },

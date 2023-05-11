@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useCallback } from 'react'
-import { NativeBaseProvider, StatusBar } from 'native-base'
+import { NativeBaseProvider } from 'native-base'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
 import {
