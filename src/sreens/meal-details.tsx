@@ -16,9 +16,11 @@ import {
 } from 'native-base'
 import { ArrowLeft } from 'phosphor-react-native'
 import { useState } from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { StackNavigationProp } from '../routes/app.routes'
 
 export function MealDetails() {
+  const insets = useSafeAreaInsets()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { params } = useRoute()
   const { colors } = useTheme()
@@ -29,23 +31,26 @@ export function MealDetails() {
   const badgeText = isOnDiet ? 'Dentro da dieta' : 'Fora da dieta'
 
   return (
-    <VStack>
-      <Center px="8" h={20} bg={`${color}Light`} position="relative">
-        <IconButton
-          onPress={navigation.goBack}
-          position="absolute"
-          top="4"
-          left="24px"
-          icon={
-            <Icon as={() => <ArrowLeft color={colors[`${color}Dark`]} />} />
-          }
-          _pressed={{
-            backgroundColor: 'gray.400:alpha.40',
-            rounded: 'full',
-          }}
-        />
-        <Heading fontSize="lg">Refeição</Heading>
-      </Center>
+    <VStack bg={`${color}Light`}>
+      <Box pt={insets.top}>
+        <Center px="8" h={20} bg={`${color}Light`} position="relative">
+          <IconButton
+            onPress={navigation.goBack}
+            position="absolute"
+            top="4"
+            left="24px"
+            icon={
+              <Icon as={() => <ArrowLeft color={colors[`${color}Dark`]} />} />
+            }
+            _pressed={{
+              backgroundColor: 'gray.400:alpha.40',
+              rounded: 'full',
+            }}
+          />
+          <Heading fontSize="lg">Refeição</Heading>
+        </Center>
+      </Box>
+
       <ScrollView
         _contentContainerStyle={{
           flex: 1,

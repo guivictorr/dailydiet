@@ -8,7 +8,6 @@ import { Control, FieldValues, useController } from 'react-hook-form'
 
 type InputProps = {
   label: string
-  errorMessage?: string
   control?: Control<FieldValues, any>
   name: string
   input?: IInputProps
@@ -17,18 +16,18 @@ type InputProps = {
 
 export function Input({
   label = 'Label',
-  errorMessage,
   input,
   control,
   name,
   formControl,
 }: InputProps) {
-  const { field } = useController({
+  const { field, fieldState } = useController({
     control,
     name,
   })
+
   return (
-    <FormControl isInvalid={!!errorMessage} {...formControl}>
+    <FormControl isInvalid={fieldState.invalid} {...formControl}>
       <FormControl.Label
         _text={{ color: 'gray.200', fontWeight: 'bold', fontSize: 'md' }}
       >
@@ -48,7 +47,9 @@ export function Input({
         value={field.value}
         {...input}
       />
-      <FormControl.ErrorMessage>{errorMessage}</FormControl.ErrorMessage>
+      <FormControl.ErrorMessage>
+        {fieldState.error?.message}
+      </FormControl.ErrorMessage>
     </FormControl>
   )
 }

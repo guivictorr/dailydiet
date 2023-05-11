@@ -12,6 +12,7 @@ import {
 } from 'native-base'
 import { Plus } from 'phosphor-react-native'
 import { SectionListData } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import DailyDietLogo from '../../assets/logo.png'
 import { Meal, MealProps } from '../components/meal'
 import { StatisticResume } from '../components/statistic-resume'
@@ -42,11 +43,16 @@ const mealsList: SectionListData<MealProps>[] = [
 ]
 
 export function Home() {
+  const insets = useSafeAreaInsets()
   const navigation = useNavigation<StackNavigationProp>()
 
   return (
     <VStack px="6" pt="5">
-      <HStack alignItems="center" justifyContent="space-between">
+      <HStack
+        pt={insets.top}
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <Image alt="Daily Diet" source={DailyDietLogo} />
         <UserPhoto />
       </HStack>

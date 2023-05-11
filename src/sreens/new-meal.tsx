@@ -1,5 +1,4 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
-import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import {
   Box,
   Button,
@@ -15,9 +14,13 @@ import {
 } from 'native-base'
 import { ArrowLeft } from 'phosphor-react-native'
 import { useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import { Input } from '../components/input'
 import { StackNavigationProp, AppRoutesList } from '../routes/app.routes'
 import { Controller, useForm } from 'react-hook-form'
+import { DatetimePicker } from '../components/datetime-picker'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 type RadioButtonProps = {
   options: {
@@ -80,44 +83,60 @@ const modes = {
   },
 }
 
+const newMealSchema = z.object({
+  name: z
+    .string({
+      required_error: 'Campo obrigatório',
+    })
+    .min(1),
+  description: z
+    .string({
+      required_error: 'Campo obrigatório',
+    })
+    .min(1),
+  date: z.date({
+    required_error: 'Campo obrigatório',
+  }),
+  isOnDiet: z.enum(['yes', 'no'], {
+    required_error: 'Campo obrigatório',
+  }),
+})
+
 export function NewMeal() {
-  const { control, handleSubmit, getValues } = useForm()
+  const insets = useSafeAreaInsets()
+  const { control, handleSubmit } = useForm({
+    resolver: zodResolver(newMealSchema),
+  })
+
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp>()
   const { params } = useRoute()
   const { mode } = params as AppRoutesList['NewMeal']
 
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
-
   const handleFormSubmit = (data: any) => {
     console.warn(data)
   }
 
-  const showDateTimePicker = () => {
-    setDatePickerVisibility(true)
-  }
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false)
-  }
-
   return (
-    <VStack>
-      <Center px="8" h={20} bg="gray.500" position="relative">
-        <IconButton
-          onPress={navigation.goBack}
-          position="absolute"
-          top="4"
-          left="24px"
-          icon={<Icon as={() => <ArrowLeft color={colors.gray['100']} />} />}
-          _pressed={{
-            backgroundColor: 'gray.400:alpha.40',
-            rounded: 'full',
-          }}
-        />
-        <Heading fontSize="lg">{modes[mode].title}</Heading>
-      </Center>
-      <ScrollView pt="10" px="8" bg="gray.700" roundedTop="20" mt={-2} h="full">
+    <VStack flex={1} bg="gray.500">
+      <Box pt={insets.top}>
+        <Center px="8" h={20} bg="gray.500" position="relative">
+          <IconButton
+            onPress={navigation.goBack}
+            position="absolute"
+            top="4"
+            left="24px"
+            icon={<Icon as={() => <ArrowLeft color={colors.gray['100']} />} />}
+            _pressed={{
+              backgroundColor: 'gray.400:alpha.40',
+              rounded: 'full',
+            }}
+          />
+          <Heading fontSize="lg">{modes[mode].title}</Heading>
+        </Center>
+      </Box>
+
+      <ScrollView pt="10" px="8" bg="gray.700" roundedTop="20" mt={-2}>
         <VStack space="6">
           <Input name="name" control={control} label="Nome" />
           <Input
@@ -129,47 +148,7 @@ export function NewMeal() {
               h: 120,
             }}
           />
-          <HStack space="5" justifyContent="space-between">
-            <VStack w="full">
-              <Text fontWeight="bold" fontSize="md">
-                Data e hora
-              </Text>
-              <Button
-                bg="transparent"
-                h="16"
-                borderWidth={1}
-                borderColor="gray.500"
-                onPress={showDateTimePicker}
-                _text={{
-                  color: 'black',
-                }}
-                _pressed={{
-                  bg: 'transparent',
-                }}
-              >
-                {getValues().date &&
-                  getValues().date.toLocaleDateString('pt-br', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-              </Button>
-            </VStack>
-            <Controller
-              control={control}
-              name="date"
-              render={({ field: { onChange } }) => (
-                <DateTimePickerModal
-                  isVisible={isDatePickerVisible}
-                  mode="datetime"
-                  onConfirm={(event) => {
-                    onChange(event)
-                    hideDatePicker()
-                  }}
-                  onCancel={hideDatePicker}
-                />
-              )}
-            />
-          </HStack>
+          <DatetimePicker control={control} />
           <VStack>
             <Text mb="2" fontWeight="bold" fontSize="md">
               Está dentro da dieta ?

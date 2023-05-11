@@ -12,6 +12,7 @@ import {
   VStack,
 } from 'native-base'
 import { ArrowLeft } from 'phosphor-react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { StackNavigationProp } from '../routes/app.routes'
 
 type CenteredBoxProps = {
@@ -27,10 +28,11 @@ const CenteredBox = ({ title, description, ...rest }: CenteredBoxProps) => (
 )
 
 export function GeneralStatistics() {
+  const insets = useSafeAreaInsets()
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp>()
   return (
-    <VStack>
+    <VStack pt={insets.top} bg="greenLight">
       <Center px="8" h={160} bg="greenLight" position="relative">
         <IconButton
           onPress={navigation.goBack}
