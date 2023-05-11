@@ -103,15 +103,12 @@ const newMealSchema = z.object({
   }),
 })
 
-type NewMealSchemaForm = z.infer<typeof newMealSchema>
+export type NewMealSchemaForm = z.infer<typeof newMealSchema>
 
 export function NewMeal() {
   const insets = useSafeAreaInsets()
-  const { control, handleSubmit, getValues } = useForm<NewMealSchemaForm>({
+  const { control, handleSubmit, getValues } = useForm({
     resolver: zodResolver(newMealSchema),
-    defaultValues: {
-      isOnDiet: 'yes',
-    },
   })
 
   const { colors } = useTheme()
