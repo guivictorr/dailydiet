@@ -4,11 +4,11 @@ import {
   IInputProps,
   Input as NativeBaseInput,
 } from 'native-base'
-import { Control, FieldValues, useController } from 'react-hook-form'
+import { Control, useController } from 'react-hook-form'
 
 type InputProps = {
   label: string
-  control?: Control<FieldValues, any>
+  control?: Control<any, any>
   name: string
   input?: IInputProps
   formControl?: IFormControlProps

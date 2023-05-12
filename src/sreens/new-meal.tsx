@@ -21,6 +21,7 @@ import { StackNavigationProp, AppRoutesList } from '../routes/app.routes'
 import { Controller, useForm } from 'react-hook-form'
 import { DatetimePicker } from '../components/datetime-picker'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { createMeal } from '../storage/meal'
 
 type RadioButtonProps = {
   options: {
@@ -107,7 +108,12 @@ export type NewMealSchemaForm = z.infer<typeof newMealSchema>
 
 export function NewMeal() {
   const insets = useSafeAreaInsets()
-  const { control, handleSubmit, getValues } = useForm({
+  const {
+    control,
+    handleSubmit,
+    getValues,
+    formState: { isSubmitting },
+  } = useForm<NewMealSchemaForm>({
     resolver: zodResolver(newMealSchema),
   })
 
@@ -116,9 +122,10 @@ export function NewMeal() {
   const { params } = useRoute()
   const { mode } = params as AppRoutesList['NewMeal']
 
-  const handleFormSubmit = (data: any) => {
-    navigation.navigate('Feedback', { isOnDiet: getValues().isOnDiet })
-    console.warn(data)
+  const handleFormSubmit = (data: NewMealSchemaForm) => {
+    createMeal(data).finally(() => {
+      navigation.navigate('Feedback', { isOnDiet: getValues().isOnDiet })
+    })
   }
 
   return (
@@ -181,7 +188,11 @@ export function NewMeal() {
             />
           </VStack>
 
-          <Button mt="8" onPress={handleSubmit(handleFormSubmit)}>
+          <Button
+            isLoading={isSubmitting}
+            mt="8"
+            onPress={handleSubmit(handleFormSubmit)}
+          >
             {modes[mode].submitText}
           </Button>
         </VStack>

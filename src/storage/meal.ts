@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { randomUUID } from 'node:crypto'
+import * as Crypto from 'expo-crypto'
 
 const STORAGE_PREFIX = '@daily-diet'
 
@@ -34,13 +34,13 @@ export async function getMealById(id: string) {
   }
 }
 
-export async function createMeal(meal: MealStorageDTO) {
+export async function createMeal(meal: Omit<MealStorageDTO, 'id'>) {
   try {
     const storedMeals = await getMeals()
 
     const newMeal = {
       ...meal,
-      id: randomUUID(),
+      id: Crypto.randomUUID(),
     }
 
     const storage = JSON.stringify([...storedMeals, newMeal])

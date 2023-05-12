@@ -1,10 +1,10 @@
 import { Button, FormControl, HStack } from 'native-base'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import { Control, FieldValues, useController } from 'react-hook-form'
+import { Control, useController } from 'react-hook-form'
 import { useState } from 'react'
 
 type DatetimePickerProps = {
-  control: Control<FieldValues, any>
+  control: Control<any, any>
 }
 
 export const DatetimePicker = ({ control }: DatetimePickerProps) => {
