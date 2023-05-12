@@ -49,7 +49,7 @@ export const DatetimePicker = ({ control }: DatetimePickerProps) => {
           }}
         >
           {field.value &&
-            field.value.toLocaleDateString('pt-br', {
+            new Date(field.value).toLocaleDateString('pt-br', {
               hour: '2-digit',
               minute: '2-digit',
             })}

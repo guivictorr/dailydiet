@@ -14,7 +14,7 @@ import { Plus } from 'phosphor-react-native'
 import { useEffect, useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import DailyDietLogo from '../../assets/logo.png'
-import { Meal } from '../components/meal'
+import { Meal, MealStatus } from '../components/meal'
 import { StatisticResume } from '../components/statistic-resume'
 import { UserPhoto } from '../components/user-photo'
 import { StackNavigationProp } from '../routes/app.routes'
@@ -29,16 +29,15 @@ export function Home() {
 
   useEffect(() => {
     getMeals().then((meals) => {
-      const formattedMealsArray = meals.map((meal) => {
-        return {
-          title: meal.date.toString(),
-          data: meals.filter(
-            (originalMeals) => originalMeals.date === meal.date,
-          ),
-        }
-      })
+      const formattedMeals = meals.reduce((acc, meal) => {
+        const day = new Date(meal.date).getDay().toString()
+        acc[day] = acc[day] || { title: meal.date, data: [] }
+        acc[day].data.push(meal)
 
-      setMeals(formattedMealsArray)
+        return acc
+      }, {} as any)
+
+      setMeals(Object.values(formattedMeals))
     })
   }, [])
 
@@ -70,11 +69,11 @@ export function Home() {
         sections={meals}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Meal createdAt={item.date} name={item.name} status="OFF_DIET" />
+          <Meal createdAt={item.date} name={item.name} status={item.isOnDiet} />
         )}
         stickySectionHeadersEnabled={false}
         renderSectionHeader={({ section: { title } }) => (
-          <Heading mt="8" mb="2" fontSize="xl">
+          <Heading mt="8" fontSize="xl">
             {new Date(title).toLocaleDateString('pt-br', {})}
           </Heading>
         )}

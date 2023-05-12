@@ -8,7 +8,7 @@ export type MealStorageDTO = {
   name: string
   isOnDiet: 'yes' | 'no'
   description: string
-  date: Date
+  date: string
 }
 
 export async function getMeals() {

@@ -3,23 +3,19 @@ import { useNavigation } from '@react-navigation/native'
 import { Box, Text, Divider, HStack, Pressable, Heading } from 'native-base'
 import { StackNavigationProp } from '../routes/app.routes'
 
-enum MealStatus {
-  ON_DIET = 'greenMid',
-  OFF_DIET = 'redMid',
-}
-
 export type MealProps = {
-  createdAt: Date
+  createdAt: string
   name: string
-  status: keyof typeof MealStatus
+  status: 'yes' | 'no'
 }
 
 export function Meal({ name, createdAt, status }: MealProps) {
   const navigation = useNavigation<StackNavigationProp>()
+  const color = status === 'yes' ? 'green' : 'red'
   return (
     <Pressable
       onPress={() =>
-        navigation.navigate('MealDetails', { isOnDiet: status === 'ON_DIET' })
+        navigation.navigate('MealDetails', { isOnDiet: status === 'yes' })
       }
       borderWidth={1}
       rounded={6}
@@ -27,6 +23,7 @@ export function Meal({ name, createdAt, status }: MealProps) {
       py="4"
       pl="3"
       pr="4"
+      my="2"
       _pressed={{
         opacity: 0.7,
       }}
@@ -40,7 +37,7 @@ export function Meal({ name, createdAt, status }: MealProps) {
           <Text fontSize="lg">{name}</Text>
         </HStack>
 
-        <Box boxSize={14} bg={MealStatus[status]} rounded="full" />
+        <Box boxSize={14} bg={`${color}Mid`} rounded="full" />
       </HStack>
     </Pressable>
   )
