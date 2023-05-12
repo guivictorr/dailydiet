@@ -62,7 +62,7 @@ export const DatetimePicker = ({ control }: DatetimePickerProps) => {
         isVisible={isDatePickerVisible}
         mode="datetime"
         onConfirm={(event) => {
-          field.onChange(event)
+          field.onChange(String(event))
           hideDatePicker()
         }}
         onCancel={hideDatePicker}

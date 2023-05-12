@@ -3,7 +3,7 @@ import * as Crypto from 'expo-crypto'
 
 const STORAGE_PREFIX = '@daily-diet'
 
-type MealStorageDTO = {
+export type MealStorageDTO = {
   id: string
   name: string
   isOnDiet: 'yes' | 'no'

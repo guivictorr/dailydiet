@@ -11,40 +11,36 @@ import {
   VStack,
 } from 'native-base'
 import { Plus } from 'phosphor-react-native'
-import { SectionListData } from 'react-native'
+import { useEffect, useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import DailyDietLogo from '../../assets/logo.png'
-import { Meal, MealProps } from '../components/meal'
+import { Meal } from '../components/meal'
 import { StatisticResume } from '../components/statistic-resume'
 import { UserPhoto } from '../components/user-photo'
 import { StackNavigationProp } from '../routes/app.routes'
-
-const mealsList: SectionListData<MealProps>[] = [
-  {
-    title: '18.05.2023',
-    data: [
-      {
-        name: 'X-tudo',
-        status: 'OFF_DIET',
-        createdAt: new Date(),
-      },
-    ],
-  },
-  {
-    title: '18.05.2023',
-    data: [
-      {
-        name: 'Whey',
-        status: 'ON_DIET',
-        createdAt: new Date(),
-      },
-    ],
-  },
-]
+import { getMeals, MealStorageDTO } from '../storage/meal'
 
 export function Home() {
+  const [meals, setMeals] = useState<
+    { title: string; data: MealStorageDTO[] }[]
+  >([])
   const insets = useSafeAreaInsets()
   const navigation = useNavigation<StackNavigationProp>()
+
+  useEffect(() => {
+    getMeals().then((meals) => {
+      const formattedMealsArray = meals.map((meal) => {
+        return {
+          title: meal.date.toString(),
+          data: meals.filter(
+            (originalMeals) => originalMeals.date === meal.date,
+          ),
+        }
+      })
+
+      setMeals(formattedMealsArray)
+    })
+  }, [])
 
   return (
     <VStack px="6" pt="5">
@@ -71,13 +67,15 @@ export function Home() {
       </Button>
 
       <SectionList
-        sections={mealsList}
-        keyExtractor={(item, index) => item.name + index}
-        renderItem={({ item }) => <Meal {...item} />}
+        sections={meals}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Meal createdAt={item.date} name={item.name} status="OFF_DIET" />
+        )}
         stickySectionHeadersEnabled={false}
         renderSectionHeader={({ section: { title } }) => (
           <Heading mt="8" mb="2" fontSize="xl">
-            {title}
+            {new Date(title).toLocaleDateString('pt-br', {})}
           </Heading>
         )}
       />

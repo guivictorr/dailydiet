@@ -96,7 +96,7 @@ const newMealSchema = z.object({
       required_error: 'Campo obrigatório',
     })
     .min(1),
-  date: z.date({
+  date: z.string({
     required_error: 'Campo obrigatório',
   }),
   isOnDiet: z.enum(['yes', 'no'], {
