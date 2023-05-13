@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import {
   Box,
   Button,
@@ -11,10 +11,10 @@ import {
   VStack,
 } from 'native-base'
 import { Plus } from 'phosphor-react-native'
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import DailyDietLogo from '../../assets/logo.png'
-import { Meal, MealStatus } from '../components/meal'
+import { Meal } from '../components/meal'
 import { StatisticResume } from '../components/statistic-resume'
 import { UserPhoto } from '../components/user-photo'
 import { StackNavigationProp } from '../routes/app.routes'
@@ -27,19 +27,21 @@ export function Home() {
   const insets = useSafeAreaInsets()
   const navigation = useNavigation<StackNavigationProp>()
 
-  useEffect(() => {
-    getMeals().then((meals) => {
-      const formattedMeals = meals.reduce((acc, meal) => {
-        const day = new Date(meal.date).getDay().toString()
-        acc[day] = acc[day] || { title: meal.date, data: [] }
-        acc[day].data.push(meal)
+  useFocusEffect(
+    useCallback(() => {
+      getMeals().then((meals) => {
+        const formattedMeals = meals.reduce((acc, meal) => {
+          const day = new Date(meal.date).getDay().toString()
+          acc[day] = acc[day] || { title: meal.date, data: [] }
+          acc[day].data.push(meal)
 
-        return acc
-      }, {} as any)
+          return acc
+        }, {} as any)
 
-      setMeals(Object.values(formattedMeals))
-    })
-  }, [])
+        setMeals(Object.values(formattedMeals))
+      })
+    }, []),
+  )
 
   return (
     <VStack px="6" pt="5">
