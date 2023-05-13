@@ -44,7 +44,7 @@ export function Home() {
   )
 
   return (
-    <VStack px="6" pt="5">
+    <VStack flex={1} px="6" pt="5">
       <HStack
         pt={insets.top}
         alignItems="center"

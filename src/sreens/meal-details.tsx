@@ -31,7 +31,7 @@ export function MealDetails() {
   const badgeText = isOnDiet ? 'Dentro da dieta' : 'Fora da dieta'
 
   return (
-    <VStack bg={`${color}Light`}>
+    <VStack flex={1} bg={`${color}Light`}>
       <Box pt={insets.top}>
         <Center px="8" h={20} bg={`${color}Light`} position="relative">
           <IconButton
@@ -55,8 +55,8 @@ export function MealDetails() {
         _contentContainerStyle={{
           flex: 1,
           pt: 10,
+          pb: 10,
           px: 9,
-          paddingBottom: 20,
         }}
         bg="gray.700"
         roundedTop="20"
