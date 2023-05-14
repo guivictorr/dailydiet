@@ -21,10 +21,10 @@ Frontend
 
 ```
 ## 1. Clone repo
-git clone https://github.com/guivictorr/react-native-challenge-02.git
+git clone https://github.com/guivictorr/dailydiet.git
 
 ## 2. Change to project folder
-cd react-native-challenge-02
+cd dailydiet
 
 ## 3. Install dependencies
 npm install
@@ -44,4 +44,4 @@ Once your pull request has been merged, you can delete your branch.
 
 ## 📝 License
 
-This project is under the MIT license. See the [LICENSE](https://github.com/ignite-bootcamp/react-native-challenge-02/blob/main/LICENSE) file for more details.
+This project is under the MIT license. See the [LICENSE](https://github.com/ignite-bootcamp/dailydiet/blob/main/LICENSE) file for more details.
