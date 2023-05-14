@@ -58,11 +58,8 @@ export async function createMeal(meal: Omit<MealStorageDTO, 'id'>) {
 export async function deleteMeal(mealId: string) {
   try {
     const storedMeals = await getMeals()
-
     const filteredMeals = storedMeals.filter((meal) => meal.id !== mealId)
-
     const storage = JSON.stringify(filteredMeals)
-
     await AsyncStorage.setItem(`${STORAGE_PREFIX}:meal`, storage)
   } catch (error) {
     throw new Error('deleteMeal: error trying to delete meal')

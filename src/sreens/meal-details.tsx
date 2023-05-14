@@ -19,7 +19,7 @@ import { ArrowLeft } from 'phosphor-react-native'
 import { useEffect, useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { StackNavigationProp } from '../routes/app.routes'
-import { getMealById, MealStorageDTO } from '../storage/meal'
+import { deleteMeal, getMealById, MealStorageDTO } from '../storage/meal'
 
 export function MealDetails() {
   const [meal, setMeal] = useState<MealStorageDTO | null>(null)
@@ -35,6 +35,12 @@ export function MealDetails() {
   const color = meal?.isOnDiet === 'yes' ? 'green' : 'red'
   const badgeText =
     meal?.isOnDiet === 'yes' ? 'Dentro da dieta' : 'Fora da dieta'
+
+  function handleDeleteMeal() {
+    deleteMeal(mealId).finally(() => {
+      navigation.navigate('Home')
+    })
+  }
 
   useEffect(() => {
     getMealById(mealId).then((meal) => {
@@ -148,7 +154,11 @@ export function MealDetails() {
               >
                 Cancelar
               </Button>
-              <Button _text={{ fontSize: 'sm' }} flex={1}>
+              <Button
+                onPress={handleDeleteMeal}
+                _text={{ fontSize: 'sm' }}
+                flex={1}
+              >
                 Sim, Excluir
               </Button>
             </HStack>
