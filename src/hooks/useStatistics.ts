@@ -12,7 +12,9 @@ export function useStatistics() {
     (meal) => meal.isOnDiet === 'no',
   ).length
 
-  const percentageOnDiet = (totalMealsOnDiet * 100) / totalMeals
+  const percentageOnDiet = totalMeals
+    ? (totalMealsOnDiet * 100) / totalMeals
+    : 0
 
   useFocusEffect(
     useCallback(() => {

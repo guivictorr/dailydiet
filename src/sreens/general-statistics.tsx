@@ -13,6 +13,7 @@ import {
 } from 'native-base'
 import { ArrowLeft } from 'phosphor-react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useStatistics } from '../hooks/useStatistics'
 import { StackNavigationProp } from '../routes/app.routes'
 
 type CenteredBoxProps = {
@@ -28,6 +29,8 @@ const CenteredBox = ({ title, description, ...rest }: CenteredBoxProps) => (
 )
 
 export function GeneralStatistics() {
+  const { totalMeals, totalMealsOnDiet, totalMealsOffDiet, percentageOnDiet } =
+    useStatistics()
   const insets = useSafeAreaInsets()
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp>()
@@ -45,7 +48,7 @@ export function GeneralStatistics() {
             rounded: 'full',
           }}
         />
-        <Heading fontSize="3xl">90,86%</Heading>
+        <Heading fontSize="3xl">{percentageOnDiet.toFixed(2)}%</Heading>
         <Text fontSize="md">das refeições dentro da dieta</Text>
       </Center>
       <VStack bg="gray.700" roundedTop="20" mt={-2} h="full">
@@ -55,19 +58,18 @@ export function GeneralStatistics() {
           </Heading>
           <Stack space="3" px="8" w="full">
             <CenteredBox
-              title="22"
-              description="melhor sequência de pratos dentro da dieta"
+              title={totalMeals.toString()}
+              description="refeições registradas"
             />
-            <CenteredBox title="109" description="refeições registradas" />
             <HStack space="3" justifyContent="space-between">
               <CenteredBox
-                title="99"
+                title={totalMealsOnDiet.toString()}
                 description="refeições dentro da dieta"
                 flex={1}
                 bg="greenLight"
               />
               <CenteredBox
-                title="10"
+                title={totalMealsOffDiet.toString()}
                 description="refeições fora da dieta"
                 flex={1}
                 bg="redLight"

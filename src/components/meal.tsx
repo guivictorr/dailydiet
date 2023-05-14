@@ -30,7 +30,8 @@ export function Meal({ name, createdAt, status, mealId }: MealProps) {
       <HStack alignItems="center" justifyContent="space-between">
         <HStack justifyContent="space-between" alignItems="center">
           <Heading fontSize="xs">
-            {new Date(createdAt).getHours()}:{new Date(createdAt).getMinutes()}
+            {new Date(createdAt).getHours().toString().padStart(2, '0')}:
+            {new Date(createdAt).getMinutes().toString().padStart(2, '0')}
           </Heading>
           <Divider h={14} color="gray.400" orientation="vertical" mx="3" />
           <Text fontSize="lg">{name}</Text>
