@@ -13,34 +13,57 @@ import {
   Text,
   useTheme,
   VStack,
+  Skeleton,
 } from 'native-base'
 import { ArrowLeft } from 'phosphor-react-native'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { StackNavigationProp } from '../routes/app.routes'
+import { getMealById, MealStorageDTO } from '../storage/meal'
 
 export function MealDetails() {
+  const [meal, setMeal] = useState<MealStorageDTO | null>(null)
+
   const insets = useSafeAreaInsets()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { params } = useRoute()
   const { colors } = useTheme()
   const navigation = useNavigation<StackNavigationProp>()
 
-  const { isOnDiet } = params as { isOnDiet: boolean }
-  const color = isOnDiet ? 'green' : 'red'
-  const badgeText = isOnDiet ? 'Dentro da dieta' : 'Fora da dieta'
+  const { mealId } = params as { mealId: string }
+
+  const color = meal?.isOnDiet === 'yes' ? 'green' : 'red'
+  const badgeText =
+    meal?.isOnDiet === 'yes' ? 'Dentro da dieta' : 'Fora da dieta'
+
+  useEffect(() => {
+    getMealById(mealId).then((meal) => {
+      setTimeout(() => setMeal(meal), 1000)
+    })
+  }, [mealId])
 
   return (
-    <VStack flex={1} bg={`${color}Light`}>
+    <VStack flex={1} bg={meal ? `${color}Light` : 'gray.500'}>
       <Box pt={insets.top}>
-        <Center px="8" h={20} bg={`${color}Light`} position="relative">
+        <Center
+          px="8"
+          h={20}
+          bg={meal ? `${color}Light` : 'gray.500'}
+          position="relative"
+        >
           <IconButton
             onPress={navigation.goBack}
             position="absolute"
             top="4"
             left="24px"
             icon={
-              <Icon as={() => <ArrowLeft color={colors[`${color}Dark`]} />} />
+              <Icon
+                as={() => (
+                  <ArrowLeft
+                    color={meal ? colors[`${color}Dark`] : colors.gray['100']}
+                  />
+                )}
+              />
             }
             _pressed={{
               backgroundColor: 'gray.400:alpha.40',
@@ -66,26 +89,37 @@ export function MealDetails() {
         <VStack h="full" justifyContent="space-between" space="6">
           <VStack space="6">
             <VStack>
-              <Heading mb="2" fontSize="xl">
-                Sanduíche
-              </Heading>
-              <Text>
-                Sanduíche de pão integral com atum e salada de alface e tomate
-              </Text>
+              <Skeleton.Text isLoaded={!!meal} mb="8" lines={1}>
+                <Heading mb="2" fontSize="xl">
+                  {meal?.name}
+                </Heading>
+              </Skeleton.Text>
+              <Skeleton.Text isLoaded={!!meal} w="2/3" lines={1}>
+                <Text>{meal?.description}</Text>
+              </Skeleton.Text>
             </VStack>
             <VStack>
-              <Heading mb="2" fontSize="md">
-                Data e hora
-              </Heading>
-              <Text>12/08/2022 às 16:00</Text>
+              <Heading fontSize="md">Data e hora</Heading>
+              <Skeleton.Text lines={1} mt="4" isLoaded={!!meal} w="2/5">
+                <Text mt="2">
+                  {new Date(meal?.date!).toLocaleDateString('pt-br', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </Text>
+              </Skeleton.Text>
             </VStack>
-
-            <Badge rounded="full" py="2" px="4" bg="gray.600">
-              <HStack alignItems="center">
-                <Box rounded="full" w="2" h="2" mr="2" bg={`${color}Dark`} />
-                <Text color="gray.100">{badgeText}</Text>
-              </HStack>
-            </Badge>
+            <Skeleton isLoaded={!!meal} rounded="full">
+              <Badge rounded="full" py="2" px="4" bg="gray.600">
+                <HStack alignItems="center">
+                  <Box rounded="full" w="2" h="2" mr="2" bg={`${color}Dark`} />
+                  <Text color="gray.100">{badgeText}</Text>
+                </HStack>
+              </Badge>
+            </Skeleton>
           </VStack>
           <VStack space="2">
             <Button

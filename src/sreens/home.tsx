@@ -71,7 +71,12 @@ export function Home() {
         sections={meals}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Meal createdAt={item.date} name={item.name} status={item.isOnDiet} />
+          <Meal
+            mealId={item.id}
+            createdAt={item.date}
+            name={item.name}
+            status={item.isOnDiet}
+          />
         )}
         stickySectionHeadersEnabled={false}
         renderSectionHeader={({ section: { title } }) => (

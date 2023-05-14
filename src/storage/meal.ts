@@ -26,7 +26,11 @@ export async function getMealById(id: string) {
   try {
     const storedMeals = await getMeals()
 
-    const filteredMealById = storedMeals.filter((meal) => meal.id === id)
+    const filteredMealById = storedMeals.find((meal) => meal.id === id)
+
+    if (!filteredMealById) {
+      return null
+    }
 
     return filteredMealById
   } catch (error) {

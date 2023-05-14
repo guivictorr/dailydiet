@@ -13,7 +13,9 @@ export type AppRoutesList = {
   NewMeal: { mode: 'EDIT' | 'CREATE' }
   GeneralStatistics: undefined
   Feedback: { isOnDiet: string }
-  MealDetails: { isOnDiet: boolean }
+  MealDetails: {
+    mealId: string
+  }
 }
 
 export type StackNavigationProp = NativeStackNavigationProp<AppRoutesList>
