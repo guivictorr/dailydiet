@@ -10,7 +10,7 @@ import { NewMeal } from '../sreens/new-meal'
 
 export type AppRoutesList = {
   Home: undefined
-  NewMeal: { mode: 'EDIT' | 'CREATE' }
+  NewMeal: { mode: 'EDIT' | 'CREATE'; mealId: string }
   GeneralStatistics: undefined
   Feedback: { isOnDiet: string }
   MealDetails: {
