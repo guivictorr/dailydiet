@@ -1,4 +1,5 @@
 <h1 align='center'>daily diet</h1>
+<p>Daily Diet is an app built with react native to track what you eat every day</p>
 
 ## 💄 Layout
 
