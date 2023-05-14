@@ -1,28 +1,20 @@
-/* eslint-disable no-unused-vars */
 import { useNavigation } from '@react-navigation/native'
 import { Heading, Icon, Pressable, Text, useTheme } from 'native-base'
 import { ArrowUpRight } from 'phosphor-react-native'
+import { useStatistics } from '../hooks/useStatistics'
 import { StackNavigationProp } from '../routes/app.routes'
 
-enum StatisticResumeStatus {
-  ON_DIET = 'green',
-  OFF_DIET = 'red',
-}
-
-type StatisticResumeProps = {
-  status: keyof typeof StatisticResumeStatus
-}
-
-export function StatisticResume({ status }: StatisticResumeProps) {
+export function StatisticResume() {
+  const { percentageOnDiet } = useStatistics()
   const navigation = useNavigation<StackNavigationProp>()
-
   const { colors } = useTheme()
+
   return (
     <Pressable
       onPress={() => navigation.navigate('GeneralStatistics')}
       justifyContent="center"
       alignItems="center"
-      bg={`${StatisticResumeStatus[status]}Light`}
+      bg={percentageOnDiet < 50 ? 'redLight' : 'greenLight'}
       rounded={8}
       w="full"
       px="4"
@@ -31,12 +23,12 @@ export function StatisticResume({ status }: StatisticResumeProps) {
         opacity: 0.7,
       }}
     >
-      <Heading fontSize="3xl">90,86%</Heading>
+      <Heading fontSize="3xl">{percentageOnDiet.toFixed(2)}%</Heading>
       <Text fontSize="md">das refeições dentro da dieta</Text>
       <Icon
         as={
           <ArrowUpRight
-            color={colors[`${StatisticResumeStatus[status]}Dark`]}
+            color={colors[percentageOnDiet < 50 ? 'redDark' : 'greenDark']}
           />
         }
         position="absolute"
