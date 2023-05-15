@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import { useCallback, useState } from 'react'
 import { getPicture } from '../storage/profile'
 
 export function useProfilePicture() {
@@ -6,13 +7,15 @@ export function useProfilePicture() {
     `https://i.imgur.com/ib8FKUj.png`,
   )
 
-  useEffect(() => {
-    getPicture().then((uri) => {
-      if (uri) {
-        setProfilePicture(uri)
-      }
-    })
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      getPicture().then((uri) => {
+        if (uri) {
+          setProfilePicture(uri)
+        }
+      })
+    }, []),
+  )
 
   return profilePicture
 }

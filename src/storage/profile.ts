@@ -16,3 +16,11 @@ export async function getPicture() {
     throw new Error('getPicture: error trying to get profile picture')
   }
 }
+
+export async function setPicture(uri: string) {
+  try {
+    await AsyncStorage.setItem(`${STORAGE_PREFIX}:profilePicture`, uri)
+  } catch (error) {
+    throw new Error('setPicture: error trying to set profile picture')
+  }
+}
