@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Crypto from 'expo-crypto'
 
-const STORAGE_PREFIX = '@daily-diet'
+export const STORAGE_PREFIX = '@daily-diet'
 
 export type MealStorageDTO = {
   id: string
