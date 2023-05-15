@@ -6,12 +6,12 @@ import {
   Heading,
   Icon,
   IconButton,
-  Image,
   useTheme,
   VStack,
 } from 'native-base'
 import { ArrowLeft } from 'phosphor-react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { UserPhoto } from '../components/user-photo'
 
 export function Profile() {
   const insets = useSafeAreaInsets()
@@ -37,14 +37,7 @@ export function Profile() {
         </Center>
       </Box>
       <Center mt="32">
-        <Image
-          borderWidth={2}
-          borderColor="gray.200"
-          rounded="full"
-          boxSize="32"
-          alt="foto"
-          source={{ uri: 'https://github.com/guivictorr.png' }}
-        />
+        <UserPhoto boxSize="32" />
         <Button mt="8">Mudar foto de perfil</Button>
       </Center>
     </VStack>
