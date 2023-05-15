@@ -7,10 +7,12 @@ import { GeneralStatistics } from '../sreens/general-statistics'
 import { Home } from '../sreens/home'
 import { MealDetails } from '../sreens/meal-details'
 import { NewMeal } from '../sreens/new-meal'
+import { Profile } from '../sreens/profile'
 
 export type AppRoutesList = {
   Home: undefined
-  NewMeal: { mode: 'EDIT' | 'CREATE'; mealId: string }
+  Profile: undefined
+  NewMeal: { mode: 'EDIT' | 'CREATE'; mealId?: string }
   GeneralStatistics: undefined
   Feedback: { isOnDiet: string }
   MealDetails: {
@@ -30,6 +32,7 @@ export function AppRoutes() {
       <Screen name="GeneralStatistics" component={GeneralStatistics} />
       <Screen name="Feedback" component={Feedback} />
       <Screen name="MealDetails" component={MealDetails} />
+      <Screen name="Profile" component={Profile} />
     </Navigator>
   )
 }

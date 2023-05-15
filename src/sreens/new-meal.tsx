@@ -134,6 +134,10 @@ export function NewMeal() {
   }
 
   function handleEditMeal(data: NewMealSchemaForm) {
+    if (!mealId) {
+      return
+    }
+
     editMeal(mealId, data).finally(() => {
       navigation.navigate('MealDetails', {
         mealId,
@@ -151,7 +155,7 @@ export function NewMeal() {
         }
       })
     }
-  }, [mode, mealId])
+  }, [mode, mealId, setValue])
 
   return (
     <VStack flex={1} bg="gray.500">
