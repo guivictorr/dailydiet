@@ -1,6 +1,12 @@
 <h1 align='center'>daily diet</h1>
 <p>Daily Diet is an app built with react native to track what you eat every day</p>
 
+<div align="center">
+  <img src="https://github.com/guivictorr/dailydiet/assets/55333929/ada9e0d9-93b6-4484-96ac-46b8411bdd53" width="300"/>
+  <img src="https://github.com/guivictorr/dailydiet/assets/55333929/2bb45af4-d074-4369-9ebe-c7fb2aa7aa69" width="300"/>
+  <img src="https://github.com/guivictorr/dailydiet/assets/55333929/15cfa183-8020-4b9c-9014-b9c8d064e563" width="300"/>
+</div>
+
 ## 💄 Layout
 
 - [Layout no Figma](https://www.figma.com/file/Om5K5tWEV7Om3HT74zrb3w/Daily-Diet-(Copy)?node-id=0%3A1&t=avRanko0gh7gbw6w-1)
