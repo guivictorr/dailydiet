@@ -22,10 +22,10 @@ import { UserPhoto } from '../components/user-photo'
 import { StackNavigationProp } from '../routes/app.routes'
 import { getMeals, MealStorageDTO } from '../storage/meal'
 
+type SectionListMeal = { title: string; data: MealStorageDTO[] }
+
 export function Home() {
-  const [meals, setMeals] = useState<
-    { title: string; data: MealStorageDTO[] }[]
-  >([])
+  const [meals, setMeals] = useState<SectionListMeal[]>([])
   const insets = useSafeAreaInsets()
   const navigation = useNavigation<StackNavigationProp>()
 
@@ -38,9 +38,13 @@ export function Home() {
           acc[day].data.push(meal)
 
           return acc
-        }, {} as any)
+        }, {} as Record<string, SectionListMeal>)
 
-        setMeals(Object.values(formattedMeals))
+        setMeals(
+          Object.values(formattedMeals).sort(
+            (a, b) => new Date(b.title).getTime() - new Date(a.title).getTime(),
+          ),
+        )
       })
     }, []),
   )
